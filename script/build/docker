@@ -1,0 +1,15 @@
+#!/bin/sh 
+
+mkdir -p build/docker
+rm -rf build/docker/*
+
+# Copy jars to build/docker
+cp ${DIR}/*-deps.jar build/docker/deps.jar
+cp ${DIR}/*-main.jar build/docker/main.jar
+
+# Copy Dockerfile
+cp -R script/build/docker_support/* build/docker
+
+# Build image
+cd build/docker
+docker build -t convex-web .

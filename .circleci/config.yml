@@ -30,16 +30,34 @@ jobs:
             script/build/jars
             mkdir -p /tmp/release
             DIR=/tmp/release script/ci/release
+            
+      - persist_to_workspace:
+          root: /tmp
+          paths:
+            - release
 
       - store_artifacts:
           path: /tmp/release
           destination: release
+          
       - save_cache:
           paths:
             - ~/.m2
             - ~/.gitlibs
             - ~/.npm
           key: v1-dependencies-{{ checksum "deps.edn" }}-{{ checksum "package-lock.json" }}
+  
+  docker:
+    docker: 
+      - image: docker:17.05.0-ce-git
+
+    working_directory: ~/repo
+    steps:
+      - checkout
+      - run:
+          name: Create Docker image
+          command: |
+            DIR=/tmp/release script/build/docker
 
 
 workflows:
@@ -50,10 +68,14 @@ workflows:
       # - jvm:
       #     requires:
       #        - short-if-irrelevant
+      
       - deploy
         # filters:
         #   branches:
         #     only: master
         # requires:
         #   - jvm
+      - docker:
+          requires:
+            - deploy
 

@@ -51,7 +51,7 @@
 (defn jar [{:keys [target-dir] :as opts}]
   (let [class-dir (str target-dir "classes")
         name-file (str target-dir "JAR_FILENAME")
-        jar-name (format "%s-%s.jar" (name lib) version)
+        jar-name (format "%s-%s-main.jar" (name lib) version)
         jar-full-path (str target-dir jar-name)]
     (b/write-pom {:class-dir class-dir
                   :lib       lib
