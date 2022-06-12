@@ -26,4 +26,7 @@ ADD deps.jar deps.jar
 
 ADD main.jar main.jar
 
-CMD java -Duser.home=$HOME cp:main.jar:deps.jar clojure.main -m convex-web.core
+EXPOSE 8080/tcp
+EXPOSE 5555/tcp
+
+CMD java -Duser.home=$HOME -cp main.jar:deps.jar clojure.main -m convex-web.core
