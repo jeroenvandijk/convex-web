@@ -7,7 +7,7 @@ version: 2.1
 jobs:
   deploy:
     docker:
-      - image: cimg/clojure:1.11.1
+      - image: cimg/clojure:1.11.1-node
     working_directory: ~/repo
     # resource_class: large
     steps:
