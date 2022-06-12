@@ -1,11 +1,8 @@
 # Docker for convex web
 
-FROM node:latest
+FROM openjdk:11
 
 ENV HOME=/home/convex-web
-
-RUN apt-get update \
-  && apt-get -q -y install openjdk-11-jdk curl
 
 WORKDIR $HOME
 
