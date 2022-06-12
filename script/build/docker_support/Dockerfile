@@ -22,8 +22,8 @@ RUN rm $HOME/config.edn
 
 RUN ln -s $HOME/.convex/config.edn $HOME/config.edn
 
-ADD deps.jar
+ADD deps.jar deps.jar
 
-ADD main.jar
+ADD main.jar main.jar
 
 CMD java -Duser.home=$HOME cp:main.jar:deps.jar clojure.main -m convex-web.core
