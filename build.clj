@@ -26,27 +26,67 @@
   (b/delete {:path build-path}))
 
 
-(def uber-file (format "%s-%s-standalone.jar" (name lib) version))
-(def uber-full-path (str build-path "/" uber-file))
-(def build-uberjar-name-file (str build-path "/" "UBERJAR_FILENAME"))
+(defn uberjar [{:keys [target-dir] :as opts}]
+  (let [class-dir (str target-dir "classes")
+        name-file (str target-dir "JAR_FILENAME")
+        jar-name (format "%s-%s-standalone.jar" (name lib) version)
+        jar-full-path (str target-dir jar-name)]
+    (b/write-pom {:class-dir class-dir
+                  :lib       lib
+                  :version   version
+                  :basis     basis
+                  :src-dirs  src-dirs})
+    (b/copy-dir {:src-dirs   dirs-to-copy
+                 :target-dir class-dir})
+    (b/compile-clj {:basis     basis
+                    :src-dirs  src-dirs
+                    :class-dir class-dir  })
+    (b/uber {:class-dir class-dir
+             :uber-file jar-full-path
+             :basis     basis
+             :main      main-class})
+    (spit name-file jar-name)))
 
-(defn uberjar [{:as opts}]
+
+(defn jar [{:keys [target-dir] :as opts}]
+  (let [class-dir (str target-dir "classes")
+        name-file (str target-dir "JAR_FILENAME")
+        jar-name (format "%s-%s.jar" (name lib) version)
+        jar-full-path (str target-dir jar-name)]
+    (b/write-pom {:class-dir class-dir
+                  :lib       lib
+                  :version   version
+                  :basis     basis
+                  :src-dirs  src-dirs})
+    (b/copy-dir {:src-dirs   dirs-to-copy
+                 :target-dir class-dir})
+    (b/compile-clj {:basis     basis
+                    :src-dirs  src-dirs
+                    :class-dir class-dir})
+    (b/jar {:class-dir class-dir
+            :jar-file  jar-full-path
+            :basis     basis})
+    (spit name-file jar-name)))
+
+
+(defn deps-jar [{:keys [target-dir]:as opts}]
+  (let [class-dir (str target-dir "classes")
+        name-file (str target-dir "JAR_FILENAME")
+         jar-name (format "%s-%s-deps.jar" (name lib) version)
+         jar-full-path (str target-dir jar-name)]
+    (b/write-pom {:class-dir class-dir
+                  :lib       lib
+                  :version   version
+                  :basis     basis
+                  :src-dirs  []})
+    (b/uber {:class-dir class-dir
+             :uber-file jar-full-path
+             :basis     basis})
+    (spit name-file jar-name)))
+
+
+(defn jars [_]
   (clean nil)
-  (b/write-pom {:class-dir class-dir
-                :lib       lib
-                :version   version
-                :basis     basis
-                :src-dirs  src-dirs})
-  (b/copy-dir {:src-dirs   dirs-to-copy
-               :target-dir class-dir})
-  ;; Compile not necesary, we can skip this
-  (b/compile-clj {:basis     basis
-                  :src-dirs  src-dirs
-                  :class-dir class-dir
-                  :java-opts ["-Dclojure.tools.logging.factory=clojure.tools.logging.impl/slf4j-factory"]})
-  (b/uber {:class-dir class-dir
-           :uber-file uber-full-path
-           :basis     basis
-           :main      main-class})
-  ;; Write filename to specific file for CI
-  (spit build-uberjar-name-file uber-file))
+  (uberjar  {:target-dir (str build-path "/uberjar/")})
+  (jar      {:target-dir (str build-path "/jar/")})
+  (deps-jar {:target-dir (str build-path "/depsjar/")}))

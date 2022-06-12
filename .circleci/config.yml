@@ -25,9 +25,9 @@ jobs:
             script/build/assets
             
       - run:
-          name: Create uberjar
+          name: Create jars
           command: |
-            script/build/uberjar
+            script/build/jars
             mkdir -p /tmp/release
             DIR=/tmp/release script/ci/release
 
