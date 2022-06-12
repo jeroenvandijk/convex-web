@@ -52,8 +52,10 @@ jobs:
       - image: docker:17.05.0-ce-git
 
     working_directory: ~/repo
-    steps:
+    steps:      
       - checkout
+      - attach_workspace:
+          at: /tmp/release
       - run:
           name: Create Docker image
           command: |
