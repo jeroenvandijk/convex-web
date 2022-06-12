@@ -10,6 +10,9 @@ cp ${DIR}/*-main.jar build/docker/main.jar
 # Copy Dockerfile
 cp -R script/build/docker_support/* build/docker
 
+# Copy config
+cp -R config.edn build/docker
+
 # Build image
 cd build/docker
 docker build -t convex-web .
