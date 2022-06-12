@@ -89,4 +89,4 @@
   (clean nil)
   (uberjar  {:target-dir (str build-path "/uberjar/")})
   (jar      {:target-dir (str build-path "/jar/")})
-  (deps-jar {:target-dir (str build-path "/depsjar/")}))
+  (deps-jar {:target-dir (str build-path "/deps/")}))
