@@ -2,10 +2,10 @@
 
 UBERJAR_FILENAME=$(cat build/uberjar/JAR_FILENAME)
 RELEASE="$DIR/$UBERJAR_FILENAME"
-cp build/${UBERJAR_FILENAME} $RELEASE
+cp build/uberjar/${UBERJAR_FILENAME} $RELEASE
 
 # Check if uberjar is correct
-java -cp "$RELEASE" clojure.main -e '(println "OK")'
+java -cp "$RELEASE" clojure.main -e '(println "OK")' || exit 1
 
 # Copy other two jars
 JAR_FILENAME=$(cat build/jar/JAR_FILENAME)
@@ -15,5 +15,5 @@ cp build/jar/${JAR_FILENAME} $DIR
 cp build/deps/${DEPS_JAR_FILENAME} $DIR
 
 # Check if classpath is correct
-java -cp "$DIR/$JAR_FILENAME:$DIR/$DEPS_JAR_FILENAME" clojure.main -e '(println "OK")'
+java -cp "$DIR/$JAR_FILENAME:$DIR/$DEPS_JAR_FILENAME" clojure.main -e '(println "OK")' || exit 1
 
