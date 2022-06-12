@@ -28,16 +28,16 @@ jobs:
           name: Create jars
           command: |
             script/build/jars
-            mkdir -p /tmp/release
-            DIR=/tmp/release script/ci/release
+            mkdir -p /tmp/workspace/release
+            DIR=/tmp/workspace/release script/ci/release
             
       - persist_to_workspace:
-          root: /tmp
+          root: /tmp/workspace
           paths:
             - release
 
       - store_artifacts:
-          path: /tmp/release
+          path: /tmp/workspace/release
           destination: release
           
       - save_cache:
@@ -55,11 +55,11 @@ jobs:
     steps:      
       - checkout
       - attach_workspace:
-          at: /tmp/release
+          at: /tmp/workspace
       - run:
           name: Create Docker image
           command: |
-            DIR=/tmp/release script/build/docker
+            DIR=/tmp/workspace/release script/build/docker
 
 
 workflows:
