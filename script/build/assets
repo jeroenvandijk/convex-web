@@ -1,0 +1,9 @@
+#!/bin/sh -x
+
+npm install
+
+# JS
+npm run app:release
+
+# CSS
+npm run styles:release
