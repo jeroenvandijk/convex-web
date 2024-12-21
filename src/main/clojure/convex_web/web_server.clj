@@ -37,7 +37,7 @@
 
    (convex.api Convex)
    (convex.core.crypto ASignature AKeyPair)
-   (convex.core.data Ref SignedData AccountKey ACell Hash Address Blob)
+   (convex.core.data Ref SignedData AccountKey Cells Hash Address Blob)
    (convex.core.lang Context)
    (convex.core.lang.impl AExceptional)
    (convex.core Peer State Result Order)
@@ -386,7 +386,7 @@
         (convex/set-sequence-number! address next-sequence-number)
 
         ;; Persist the transaction in the Etch datastore.
-        (ACell/createPersisted tx)
+        (Cells/announce tx nil)
 
         (log/debug "Persisted transaction ref" tx-ref)
 
