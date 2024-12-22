@@ -37,7 +37,8 @@
    (key-store f nil))
   
   (^java.security.KeyStore [f passphrase]
-   (let [f (io/file f)]
+   (let [f (io/file f)
+         passphrase (.toCharArray ^String passphrase)]
      (try
        (PFXTools/loadStore f passphrase)
        (catch IOException _ex
@@ -59,7 +60,9 @@
            key-store-file
            key-pair 
            key-pair-passphrase]}]
-  (let [key-store-file (io/file key-store-file)]
+  (let [key-store-file (io/file key-store-file)
+        key-pair-passphrase (.toCharArray ^String key-pair-passphrase)
+        key-store-passphrase (.toCharArray ^String key-store-passphrase)]
     
     ;; Creates the directory named by this abstract pathname, 
     ;; including any necessary but nonexistent parent directories.
