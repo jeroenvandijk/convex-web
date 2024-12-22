@@ -113,8 +113,8 @@
               (convex/datafy (.getAccountKey Init/HERO_KP)))))
     
     (testing "Address"
-      (is (= (.longValue Init/RESERVED_ADDRESS) 
-            (convex/datafy Init/RESERVED_ADDRESS))))
+      (is (= (.longValue Init/INIT_ADDRESS) 
+            (convex/datafy Init/INIT_ADDRESS))))
     
     (testing "Blob"
       (is (= "0x1234" (convex/datafy (Blob/fromHex "1234"))))
