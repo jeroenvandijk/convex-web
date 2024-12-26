@@ -552,7 +552,7 @@
 
 (defn sign
   ^SignedData [^AKeyPair signer ^ATransaction transaction]
-  (SignedData/create signer transaction))
+  (SignedData/sign signer transaction))
 
 (defn execute-query [^Peer peer ^Object form & [{:keys [address]}]]
   (let [^ResultContext context (if address
