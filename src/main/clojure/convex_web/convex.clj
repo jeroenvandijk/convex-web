@@ -12,11 +12,12 @@
 
   (:import 
    (convex.peer Server)
+   ;(convex.core.cvm ResultContext)
    (convex.core.init Init)
    (convex.core.data Keyword Symbol Syntax Address AccountStatus SignedData AVector AList ASet AMap ABlob Blob AccountKey ACell AHashMap SignedData)
    (convex.core.lang Core Reader RT Context AFn)
    (convex.core.lang.impl Fn CoreFn)
-   (convex.core Order Block Peer State Result)
+   (convex.core Order Block Peer State Result ResultContext)
    (convex.core.crypto AKeyPair PFXTools)
    (convex.core.transactions Transfer ATransaction Invoke Call)
    (convex.api Convex)
@@ -554,10 +555,10 @@
   (SignedData/create signer transaction))
 
 (defn execute-query [^Peer peer ^Object form & [{:keys [address]}]]
-  (let [^Context context (if address
+  (let [^ResultContext context (if address
                            (.executeQuery peer form (convex-web.convex/address address))
                            (.executeQuery peer form))]
-    (.getValue context)))
+    (.getResult context)))
 
 (defn query
   ^Result [^Convex client {:keys [source address] :as q}]
