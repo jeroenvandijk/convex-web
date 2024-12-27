@@ -259,6 +259,10 @@
     (instance? Syntax x)
     (datafy (.getValue ^Syntax x))
 
+    ;; FIXME not sure what the representation should be here
+    (instance? convex.core.lang.ops.Special x)
+    "Special..."
+
     :else
     (let [e (fn []
               (throw (ex-info (str "Can't datafy " (pr-str x) " " (some-> ^Object x (.getClass) (.getName)) ".") {:object x})))]
