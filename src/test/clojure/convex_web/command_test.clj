@@ -284,7 +284,7 @@
                 :examples [{:code "(defn my-square [x] (* x x))"}],
                 :signature [{:params [name params & body]} {:params [name & fn-decls]}],
                 :symbol "defn"},
-               :expander? true,
+               :expander true,
                :type nil}
             (c/result-metadata (convex/execute context defn) {:source "defn" :lang :convex-lisp}))))
     
@@ -299,6 +299,6 @@
                 :examples [{:code "(def a 10)"}],
                 :signature [{:params [name value]}],
                 :symbol "def"},
-               :special? true,
+               :special true,
                :type nil}
             (c/result-metadata (convex/execute context def) {:source "def" :lang :convex-lisp}))))))
