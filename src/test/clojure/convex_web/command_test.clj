@@ -172,7 +172,7 @@
                                       :convex-web.query/language :convex-lisp}})]
       
       (is (= {:convex-web.command/status :convex-web.command.status/error
-              :convex-web.command/error {:code :READER, :message "Reader error: -1..-1 <missing ')'>"}}
+              :convex-web.command/error {:code :READER, :message "Reader error: 0..0 ("}}
             
             (select-keys command [::c/status ::c/error])))))
   

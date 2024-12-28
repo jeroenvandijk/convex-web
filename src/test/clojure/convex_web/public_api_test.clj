@@ -239,7 +239,7 @@
       (is (= 400 (get response :status)))
       (is (= {:errorCode "INCORRECT",
               :source "Server",
-              :value "Reader error: -1..-1 <missing ')'>"}
+              :value "Reader error: 0..0 ("}
             
             response-body))))
   
