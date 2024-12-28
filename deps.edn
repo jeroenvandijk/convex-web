@@ -11,10 +11,14 @@
 
   world.convex/convex-peer {:mvn/version "0.7.13"}
   world.convex/net
-  {:deps/root "module/net"
+  #_{:deps/root "module/net"
    :git/sha   "7cd357f"
    :git/tag   "stable/2023-06-01"
    :git/url   "https://github.com/convex-dev/convex.cljc"}
+   ;; FIXME temporary change of repo for testing
+   {:deps/root "module/net"
+    :git/sha   "490200d8a1498349034aef6baf8e23527cea71b4"
+    :git/url   "https://github.com/jeroenvandijk/convex.cljc"}
   
   ;; world.convex/convex-core {:local/root "convex-core-0.7.0-rc3-06ee2229b8fa9abaf28309b0b609c52fcd91ba7c.jar"}
   ;; world.convex/convex-peer {:local/root "convex-peer-0.7.0-rc3-06ee2229b8fa9abaf28309b0b609c52fcd91ba7c.jar"}
